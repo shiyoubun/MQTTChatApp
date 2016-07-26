@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="rtwApp">
+<head>
+    <meta charset="utf-8" />
+    <title>MQTT Chat App</title>
+    <link rel="icon" type="image/png" href="assets/imgs/ok.ico">
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />       <!-- 讓網頁漂亮一點的CSS Style -->
+    <link href="assets/css/main.css" rel="stylesheet" />            <!-- 讓表單與角落離開一點 -->
+    <script src="assets/js/angular.min.js"></script>                  <!-- 操控網頁元件的函式庫 -->
+    <script src="assets/js/mqttws31.min.js"></script>               <!-- 連結MQTT Broker的函式庫 -->
+    <script src="assets/js/Math.uuid.js"></script>                  <!-- 一個產生Unique ID的函式庫 -->
+</head>
+<body ng-controller="rtwAppCtrl">
+    <h3>Angular.js - Websocket - MQTT Chat</h3>
+    <!-- 網頁表單UI -->
+    <h4>Ver. 0.0.1</h4>
+    <form>
+        Mqtt connection status: {{vm.mqttStatus}}<br>
+        <button type="button" class="btn btn-default" ng-click="action.connect_mqtt()">Connect</button><br/><br/>
+        Registered with ID: <input type="text" name="ID" ng-model="vm.id"><br />
+        
+        <button type="button" class="btn btn-default" ng-disabled="vm.disabled" ng-click="action.register()">Register</button>
+        <br/><br/>
+        To: (ID):<br>
+        <input type="text" name="targetID" ng-model="vm.targetid"><br />
+        <div class="form-group">
+            <label for="comment"> Message</label>
+            <textarea class="form-control" rows="3" ng-model="vm.message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default" ng-disabled="vm.disabled" ng-click="action.send_message()">Send</button>
+    </form>
+
+    <br/>
+    <div id="sendDiv" ng-style="sendDivCss">
+        You sent a message: "{{vm.sendMessage}}" to {{vm.sendTo}};
+    </div>
+    <div id="receiveDiv" ng-style="receiveDivCss">
+        Receive a message: "{{vm.receiveMessage}}" from {{vm.receiveFrom}};
+    </div>    
+    <!-- import js -->
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="config/mqtt.js"></script>
+</body>
+</html>
